@@ -20,6 +20,36 @@ if (token) {
 }
 
 onMounted(async () => {
+  // Handle Facebook OAuth callback
+  const urlParams = new URLSearchParams(window.location.search)
+  const token = urlParams.get('token')
+  const userParam = urlParams.get('user')
+  
+  if (token) {
+    localStorage.setItem('token', token)
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`
+    if (userParam) {
+      try {
+        const userData = JSON.parse(decodeURIComponent(userParam))
+        user.value = userData
+        localStorage.setItem('user', JSON.stringify(userData))
+      } catch (e) {
+        console.error('Error parsing user data:', e)
+      }
+    }
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname)
+    router.push({ name: 'home' })
+    return
+  }
+
+  // Handle error from OAuth
+  const error = urlParams.get('error')
+  if (error) {
+    alert(decodeURIComponent(error))
+    window.history.replaceState({}, document.title, window.location.pathname)
+  }
+
   try {
     const { data } = await axios.get('/me')
     user.value = data
