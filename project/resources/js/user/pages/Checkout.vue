@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import axios from 'axios';
-import { QRCodeVue3 } from 'qrcode.vue';
+import QrcodeVue from 'qrcode.vue';
 
 const props = defineProps({
   user: Object
@@ -349,17 +349,13 @@ async function submitOrder() {
             Mã QR đơn hàng
           </h3>
           <div class="flex justify-center">
-            <QRCodeVue3
+            <QrcodeVue
               :value="qrData"
-              :width="200"
-              :height="200"
-              :dotsOptions="{
-                type: 'rounded',
-                color: '#dc2626'
-              }"
-              :backgroundOptions="{ color: '#ffffff' }"
-              :cornersSquareOptions="{ type: 'extra-rounded', color: '#dc2626' }"
-              :cornersDotOptions="{ type: 'dot', color: '#dc2626' }"
+              :size="200"
+              :margin="2"
+              level="M"
+              background="#ffffff"
+              foreground="#dc2626"
             />
           </div>
           <p class="text-xs text-center text-gray-500 mt-2">

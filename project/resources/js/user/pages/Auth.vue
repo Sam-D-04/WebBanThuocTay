@@ -234,19 +234,19 @@ async function resendCode() {
 
           <!-- Form đăng nhập/đăng ký -->
           <div v-else>
-            <div
-              v-if="errors"
-              class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-lg"
-            >
-              <div class="flex items-start gap-3">
-                <i class="fa-solid fa-circle-exclamation text-red-500 mt-0.5"></i>
-                <pre
-                  class="text-sm text-red-700 whitespace-pre-wrap flex-1"
-                >{{ errors }}</pre>
-              </div>
+          <div
+            v-if="errors"
+            class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-lg"
+          >
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-exclamation text-red-500 mt-0.5"></i>
+              <pre
+                class="text-sm text-red-700 whitespace-pre-wrap flex-1"
+              >{{ errors }}</pre>
             </div>
+          </div>
 
-            <form v-if="mode === 'login'" @submit.prevent="submitLogin" class="space-y-5">
+          <form v-if="mode === 'login'" @submit.prevent="submitLogin" class="space-y-5">
             <div>
               <label class="block text-sm font-medium text-slate-700 mb-2">
                 Địa chỉ email

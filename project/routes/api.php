@@ -13,6 +13,10 @@ Route::post('/login/facebook', [AuthController::class, 'facebookLogin']);
 Route::post('/verify-email', [AuthController::class, 'verifyEmail']);
 Route::post('/resend-verification-code', [AuthController::class, 'resendVerificationCode']);
 
+// Test mail routes (có thể xóa sau khi test xong)
+Route::get('/test-mail/config', [\App\Http\Controllers\Api\TestMailController::class, 'checkMailConfig']);
+Route::post('/test-mail/send', [\App\Http\Controllers\Api\TestMailController::class, 'testMail']);
+
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
 
