@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PayPalController;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login/facebook', [AuthController::class, 'facebookLogin']);
@@ -48,4 +48,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/orders', [OrderController::class, 'adminIndex']);
         Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus']);
     });
+});
+
+
+Route::get('/users', function () {
+    return User::select('id','name')->get();
+});
+
+Route::get('/users/{id}', function ($id) {
+    return User::select('id','name')->find($id);
 });
