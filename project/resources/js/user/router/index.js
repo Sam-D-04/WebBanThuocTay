@@ -23,6 +23,17 @@ const routes = [
     { path: "/myorders", name: "myorders", component: MyOrders },
     { path: "/profile", name: "profile", component: Profile },
     { path: "/auth", name: "auth", component: Auth },
+
+    {
+    path: '/users',
+    name: 'UserList',
+    component: UserList
+  },
+  {
+    path: '/users/:id',
+    name: 'UserDetail',
+    component: UserDetail
+  }
 ];
 
 const router = createRouter({

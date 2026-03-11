@@ -261,4 +261,33 @@ class AuthController extends Controller
             return response()->json(['message' => 'Facebook login failed: ' . $e->getMessage()], 401);
         }
     }
+
+    /*
+     Lấy danh sách tất cả Users
+     URL: GET /api/users
+     */
+    public function getAllUsers()
+    {
+
+        $users = User::orderByDesc('id')->get(); 
+        
+        return response()->json($users, 200);
+    }
+
+    /*
+     Lấy thông tin 1 User theo ID
+     URL: GET /api/users/{id}
+     */
+    public function getUserById($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Không tìm thấy người dùng này'
+            ], 404);
+        }
+
+        return response()->json($user, 200);
+    }
 }

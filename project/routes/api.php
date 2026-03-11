@@ -23,6 +23,12 @@ Route::get('/products/{product}', [ProductController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{category}', [CategoryController::class, 'show']);
 
+//lấy all user 
+Route::get('/users', [AuthController::class, 'getAllUsers']); 
+        // Lấy thông tin 1 user theo ID
+Route::get('/users/{id}', [AuthController::class, 'getUserById']);
+
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -48,4 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/orders', [OrderController::class, 'adminIndex']);
         Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus']);
     });
+
+    
 });
