@@ -25,7 +25,7 @@ Route::get('/categories/{category}', [CategoryController::class, 'show']);
 
 //lấy all user 
 Route::get('/users', [AuthController::class, 'getAllUsers']); 
-        // Lấy thông tin 1 user theo ID
+// Lấy thông tin 1 user theo ID
 Route::get('/users/{id}', [AuthController::class, 'getUserById']);
 
 

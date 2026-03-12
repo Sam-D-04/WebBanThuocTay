@@ -8,7 +8,10 @@ import Profile from "../pages/Profile.vue";
 import Auth from "../pages/Auth.vue";
 import Product from "../components/Product.vue";
 import MyOrders from "../pages/UserOders.vue";
+import UserList from '../pages/UserList.vue';
+import UserDetail from '../pages/UserDetail.vue';
 
+  
 const routes = [
     { path: "/", name: "home", component: Home },
     { path: "/products", name: "products", component: Product },
