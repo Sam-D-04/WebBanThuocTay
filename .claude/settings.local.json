@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer create-project:*)",
+      "Bash(rm -rf \"E:/WEB THẦY HÙNG/WEB_THUOC/backend\"/*)",
+      "Bash(rm -rf \"E:/WEB THẦY HÙNG/WEB_THUOC/frontend\"/*)",
+      "Bash(composer require:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}
