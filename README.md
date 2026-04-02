@@ -10,3 +10,6 @@ php artisan serve          # chạy tại http://localhost:8000
 # Frontend
 cd frontend
 npm run dev                # chạy tại http://localhost:5173
+
+
+
