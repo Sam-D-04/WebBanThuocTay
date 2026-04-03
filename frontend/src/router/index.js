@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { defineAsyncComponent } from 'vue'
+import warehouseRoutes from './warehouse'
 
 // Layouts
 const AdminLayout = defineAsyncComponent(() => import('@/layouts/AdminLayout.vue'))
@@ -72,7 +73,8 @@ const routes = [
         meta: { title: 'Cài đặt', icon: 'settings' }
       }
     ]
-  }
+  },
+  ...warehouseRoutes
 ]
 
 const router = createRouter({
