@@ -6,7 +6,7 @@ const WarehouseBatches = defineAsyncComponent(() => import('@/views/warehouse/Ba
 const WarehouseInventory = defineAsyncComponent(() => import('@/views/warehouse/Inventory.vue'))
 const WarehouseAlerts = defineAsyncComponent(() => import('@/views/warehouse/Alerts.vue'))
 
-export const warehouseRoutes = [
+const warehouseRoutes = [
   {
     path: '/warehouse',
     redirect: '/warehouse/dashboard'
