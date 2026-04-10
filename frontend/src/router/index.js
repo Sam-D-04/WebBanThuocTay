@@ -105,6 +105,12 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const user = JSON.parse(localStorage.getItem('auth_user') || 'null')
 
+  if (to.path === '/login' && user) {
+    if (user.role === 'admin') return next('/dashboard')
+    if (user.role === 'warehouse') return next('/warehouse/dashboard')
+    return next('/shop')
+  }
+
   // Update document title
   if (to.meta.title) document.title = to.meta.title + ' | DượcMỹPhẩm'
 
@@ -114,8 +120,15 @@ router.beforeEach((to, from, next) => {
   }
 
   // Admin protection
-  if (to.meta.requiresAdmin && (!user || user.role !== 'admin')) {
-    return next('/shop')
+  if (to.meta.requiresAdmin) {
+    if (!user) return next('/login')
+    if (user.role !== 'admin') return next('/shop')
+  }
+
+  // Warehouse protection
+  if (to.meta.requiresWarehouse) {
+    if (!user) return next('/login')
+    if (user.role !== 'warehouse') return next('/shop')
   }
 
   next()

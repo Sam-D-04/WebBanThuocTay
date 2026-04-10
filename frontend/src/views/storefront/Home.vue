@@ -2,7 +2,7 @@
   <div>
     <!-- Hero Banner -->
     <div class="relative bg-gradient-to-r from-primary via-blue-600 to-cyan-500 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 py-12 md:py-16">
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <div class="text-white">
             <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm mb-4">
@@ -46,8 +46,14 @@
               <div class="absolute top-4 right-0 bg-white rounded-xl px-3 py-2 shadow-lg text-xs font-bold text-primary animate-bounce-slow">
                 ✓ Chính hãng 100%
               </div>
+              <div class="absolute top-16 left-2 bg-white rounded-xl px-3 py-2 shadow-lg text-xs font-bold text-cyan-700">
+                🚛 Miễn phí vận chuyển
+              </div>
               <div class="absolute bottom-8 left-0 bg-white rounded-xl px-3 py-2 shadow-lg text-xs font-bold text-green-600">
                 🚚 Giao hỏa tốc
+              </div>
+              <div class="absolute bottom-16 right-2 bg-white rounded-xl px-3 py-2 shadow-lg text-xs font-bold text-rose-600">
+                🔥 Giảm lên đến 80%
               </div>
             </div>
           </div>
@@ -79,7 +85,32 @@
     <!-- Category shortcuts -->
     <div class="max-w-7xl mx-auto px-4 py-8">
       <h2 class="text-xl font-bold text-gray-800 mb-5">Danh mục nổi bật</h2>
-      <div class="flex flex-wrap gap-2">
+
+      <div class="sm:hidden mb-4">
+        <label class="block text-sm font-medium text-gray-600 mb-2">Lọc danh mục</label>
+        <select
+          v-model="selectedCategory"
+          class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white text-gray-800 text-sm font-medium focus:outline-none focus:border-primary shadow-sm"
+        >
+          <option value="">Tất cả sản phẩm</option>
+          <option v-for="cat in categoryShortcuts" :key="cat.slug" :value="cat.slug">
+            {{ cat.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="hidden sm:flex flex-wrap gap-2">
+        <button
+          @click="selectedCategory = ''"
+          :class="[
+            'px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-200',
+            !selectedCategory
+              ? 'bg-blue-50 text-primary border-blue-200 shadow-sm shadow-blue-100'
+              : 'bg-white text-gray-700 border-gray-200 hover:border-primary/40 hover:text-primary'
+          ]"
+        >
+          Tất cả sản phẩm
+        </button>
         <button
           v-for="cat in categoryShortcuts"
           :key="cat.slug"
@@ -104,27 +135,6 @@
             {{ selectedCategory ? categoryShortcuts.find(c => c.slug === selectedCategory)?.name : 'Tất cả sản phẩm' }}
           </h2>
           <p class="text-sm text-gray-400">{{ displayedProducts.length }} sản phẩm</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <!-- Search quick filter -->
-          <div class="relative hidden sm:block">
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Lọc sản phẩm..."
-              class="pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary bg-gray-50 w-48"
-            />
-            <svg class="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-          </div>
-          <button
-            v-if="selectedCategory"
-            @click="selectedCategory = ''"
-            class="text-xs text-primary border border-primary/30 px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors"
-          >
-            Xem tất cả
-          </button>
         </div>
       </div>
 

@@ -30,7 +30,7 @@
       </nav>
 
       <div class="sidebar-footer">
-        <button class="logout-btn" type="button" @click="goAdmin" title="Đăng xuất">
+        <button class="logout-btn" type="button" @click="handleLogout" title="Đăng xuất">
           <span class="nav-icon" v-html="icons.logout"></span>
           <span v-if="!sidebarCollapsed" class="nav-label">Đăng xuất</span>
         </button>
@@ -103,6 +103,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 defineProps({
   title: {
@@ -121,6 +122,7 @@ defineProps({
 
 const route = useRoute()
 const router = useRouter()
+const authStore = useAuthStore()
 const unreadCount = computed(() => 0)
 const mobileMenuOpen = ref(false)
 const sidebarCollapsed = ref(false)
@@ -153,8 +155,11 @@ const goToSecuritySettings = () => {
   router.push({ path: '/settings', query: { tab: 'security' } })
 }
 
-const goAdmin = () => {
-  router.push('/dashboard')
+const handleLogout = () => {
+  authStore.logout()
+  profileDropdownOpen.value = false
+  mobileMenuOpen.value = false
+  router.replace('/login')
 }
 
 const icons = {

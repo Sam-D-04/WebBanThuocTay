@@ -42,6 +42,59 @@
     </div>
 
     <!-- Batches Table (FEFO Sorted) -->
+    <div class="mobile-batch-list">
+      <div
+        v-for="batch in filteredBatches"
+        :key="`mobile-${batch.id}`"
+        :class="['mobile-batch-card', getBatchRowClass(batch)]"
+      >
+        <div class="mobile-batch-head">
+          <div>
+            <p class="mobile-batch-code">{{ batch.batch_code }}</p>
+            <p class="mobile-batch-name">{{ batch.product_name }}</p>
+            <p class="mobile-batch-sub">ID SP: {{ batch.product_id }}</p>
+          </div>
+          <span class="status-badge" :class="`status-${getStatusClass(batch.status)}`">
+            {{ batch.status }}
+          </span>
+        </div>
+
+        <div class="mobile-batch-meta">
+          <div>
+            <span>Số lượng</span>
+            <strong>{{ batch.quantity }}</strong>
+          </div>
+          <div>
+            <span>Tồn còn lại</span>
+            <strong>{{ batch.remaining_quantity }}</strong>
+          </div>
+          <div>
+            <span>Ngày hết hạn</span>
+            <strong>{{ formatDate(batch.expiry_date) }}</strong>
+          </div>
+          <div>
+            <span>Còn lại</span>
+            <strong :class="getDaysBadgeClass(batch.daysToExpiry)">{{ batch.daysToExpiry < 0 ? 'Hết hạn' : batch.daysToExpiry + ' ngày' }}</strong>
+          </div>
+        </div>
+
+        <div class="mobile-batch-actions">
+          <button
+            class="action-btn edit-btn"
+            title="Chỉnh sửa"
+            v-html="getEditIcon()"
+            @click="openEditModal(batch)"
+          ></button>
+          <button
+            class="action-btn delete-btn"
+            title="Xóa"
+            v-html="getDeleteIcon()"
+            @click="handleDelete(batch.id)"
+          ></button>
+        </div>
+      </div>
+    </div>
+
     <div class="table-container">
       <table class="batches-table">
         <thead>
@@ -680,16 +733,105 @@ const getDeleteIcon = () => `
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
 }
 
+.mobile-batch-list {
+  display: none;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.mobile-batch-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid transparent;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 12px;
+}
+
+.mobile-batch-card.row-expired {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+}
+
+.mobile-batch-card.row-warning {
+  background: #fffbeb;
+  border-left-color: #f59e0b;
+}
+
+.mobile-batch-head {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.mobile-batch-code {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.mobile-batch-name {
+  margin: 0 0 2px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  overflow-wrap: anywhere;
+}
+
+.mobile-batch-sub {
+  margin: 0;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.mobile-batch-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mobile-batch-meta div {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.mobile-batch-meta span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.mobile-batch-meta strong {
+  display: block;
+  font-size: 13px;
+  color: #1e293b;
+}
+
+.mobile-batch-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
 .batches-table {
   width: 100%;
-  min-width: 1080px;
+  min-width: 0;
   border-collapse: collapse;
+  table-layout: fixed;
   font-size: 13px;
 }
 
@@ -703,13 +845,15 @@ const getDeleteIcon = () => `
   text-align: left;
   font-weight: 600;
   color: #475569;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .batches-table td {
   padding: 12px 14px;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: top;
+  overflow-wrap: anywhere;
 }
 
 .batches-table tbody tr {
@@ -730,14 +874,14 @@ const getDeleteIcon = () => `
   border-left: 3px solid #f59e0b;
 }
 
-.col-batch { width: 120px; }
-.col-product { width: 28%; }
-.col-qty { width: 110px; }
-.col-remain { width: 120px; }
-.col-expiry { width: 140px; }
-.col-days { width: 120px; }
-.col-status { width: 120px; }
-.col-actions { width: 100px; text-align: center; }
+.col-batch { width: 13%; }
+.col-product { width: 31%; }
+.col-qty { width: 9%; }
+.col-remain { width: 10%; }
+.col-expiry { width: 12%; }
+.col-days { width: 11%; }
+.col-status { width: 8%; }
+.col-actions { width: 6%; text-align: center; }
 
 .font-weight-600 {
   font-weight: 600;
@@ -767,6 +911,7 @@ const getDeleteIcon = () => `
   margin: 0 0 2px 0;
   font-weight: 600;
   color: #1e3a8a;
+  line-height: 1.35;
 }
 
 .product-sub {
@@ -870,6 +1015,7 @@ const getDeleteIcon = () => `
 /* Legend */
 .legend {
   display: flex;
+  flex-wrap: wrap;
   gap: 24px;
   padding: 16px;
   background: #f8fafc;
@@ -1013,6 +1159,12 @@ const getDeleteIcon = () => `
   .batch-form-grid {
     grid-template-columns: 1fr;
   }
+
+  .batches-table th,
+  .batches-table td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1029,8 +1181,16 @@ const getDeleteIcon = () => `
     flex-direction: column;
   }
 
+  .mobile-batch-list {
+    display: block;
+  }
+
   .table-container {
-    overflow-x: auto;
+    display: none;
+  }
+
+  .table-container {
+    overflow: hidden;
   }
 
   .form-row-split {

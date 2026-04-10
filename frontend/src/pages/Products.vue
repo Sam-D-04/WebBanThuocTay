@@ -35,6 +35,51 @@
     </div>
 
     <!-- Products Table -->
+    <div class="mobile-products-list">
+      <div v-for="product in products" :key="`mobile-${product.id}`" class="mobile-product-card">
+        <div class="mobile-product-head">
+          <div class="mobile-product-main">
+            <img :src="resolveImage(product)" alt="Ảnh sản phẩm" class="product-thumb">
+            <div>
+              <p class="name">{{ product.name }}</p>
+              <p class="type">/{{ resolveSlug(product) || 'chua-co-slug' }}</p>
+            </div>
+          </div>
+          <span class="status-badge" :class="`status-${getStatusClass(product.status)}`">
+            {{ normalizeStatus(product.status) }}
+          </span>
+        </div>
+
+        <div class="mobile-product-meta">
+          <div>
+            <span>ID</span>
+            <strong>#{{ product.id }}</strong>
+          </div>
+          <div>
+            <span>Danh mục</span>
+            <strong>{{ resolveCategory(product) }}</strong>
+          </div>
+          <div>
+            <span>Dạng bào chế</span>
+            <strong>{{ resolveDosage(product) }}</strong>
+          </div>
+          <div>
+            <span>Dung tích</span>
+            <strong>{{ resolveVolume(product) }}</strong>
+          </div>
+          <div class="wide">
+            <span>Giá niêm yết</span>
+            <strong>{{ formatCurrency(product.price) }}</strong>
+          </div>
+        </div>
+
+        <div class="mobile-product-actions">
+          <button class="action-btn edit-btn" title="Chỉnh sửa" v-html="getEditIcon()" @click="startEdit(product)"></button>
+          <button class="action-btn delete-btn" title="Xóa" v-html="getDeleteIcon()"></button>
+        </div>
+      </div>
+    </div>
+
     <div class="table-container">
       <table class="products-table">
         <thead>
@@ -378,16 +423,97 @@ const getFilterIcon = () => `
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
 }
 
+.mobile-products-list {
+  display: none;
+  margin-bottom: 20px;
+}
+
+.mobile-product-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 12px;
+}
+
+.mobile-product-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.mobile-product-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mobile-product-main .name {
+  margin: 0 0 2px 0;
+  color: #1e3a8a;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.mobile-product-main .type {
+  margin: 0;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.mobile-product-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mobile-product-meta div {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.mobile-product-meta div.wide {
+  grid-column: 1 / -1;
+}
+
+.mobile-product-meta span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.mobile-product-meta strong {
+  display: block;
+  font-size: 13px;
+  color: #1e293b;
+  overflow-wrap: anywhere;
+}
+
+.mobile-product-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .products-table {
   width: 100%;
-  min-width: 1020px;
+  min-width: 0;
   border-collapse: collapse;
+  table-layout: fixed;
   font-size: 13px;
 }
 
@@ -401,12 +527,14 @@ const getFilterIcon = () => `
   text-align: left;
   font-weight: 600;
   color: #475569;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .products-table td {
   padding: 12px 16px;
   border-bottom: 1px solid #f1f5f9;
+  overflow-wrap: anywhere;
 }
 
 .products-table tbody tr:hover {
@@ -414,15 +542,15 @@ const getFilterIcon = () => `
 }
 
 .col-id {
-  width: 60px;
+  width: 6%;
 }
 
 .col-name {
-  width: 34%;
+  width: 30%;
 }
 
 .col-category {
-  width: 14%;
+  width: 12%;
 }
 
 .col-dosage {
@@ -465,6 +593,8 @@ const getFilterIcon = () => `
   font-weight: 600;
   color: #1e3a8a;
   margin: 0 0 2px 0;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .product-name .type {
@@ -620,19 +750,11 @@ const getFilterIcon = () => `
     width: 100%;
   }
 
+  .mobile-products-list {
+    display: block;
+  }
+
   .table-container {
-    overflow-x: auto;
-  }
-
-  .col-name {
-    width: 25%;
-  }
-
-  .col-category {
-    display: none;
-  }
-
-  .col-type {
     display: none;
   }
 }

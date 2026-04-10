@@ -99,24 +99,6 @@
         </div>
       </div>
 
-      <!-- Category Nav - Clinical Color Coding -->
-      <div class="border-t border-gray-100 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-          <nav class="flex items-center gap-2 overflow-x-auto scrollbar-hide py-2.5">
-            <router-link
-              v-for="cat in categories"
-              :key="cat.id"
-              :to="`/shop?category=${cat.slug}`"
-              :class="[
-                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 border',
-                cat.color
-              ]"
-            >
-              {{ cat.name }}
-            </router-link>
-          </nav>
-        </div>
-      </div>
     </header>
 
     <!-- Main Content -->
@@ -184,16 +166,6 @@ const router = useRouter()
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 const searchQuery = ref('')
-
-const categories = [
-  { id: 1, slug: 'tri-mun',              name: 'Trị mụn',               color: 'bg-green-50  text-green-700  border-green-200  hover:bg-green-100' },
-  { id: 2, slug: 'chong-nang',           name: 'Chống nắng',             color: 'bg-orange-50 text-orange-600 border-orange-200 hover:bg-orange-100' },
-  { id: 3, slug: 'duong-am',             name: 'Dưỡng ẩm',               color: 'bg-sky-50    text-sky-700    border-sky-200    hover:bg-sky-100' },
-  { id: 4, slug: 'tri-nam',              name: 'Trị nám',                color: 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100' },
-  { id: 5, slug: 'lam-sang-da',          name: 'Làm sáng da',            color: 'bg-amber-50  text-amber-700  border-amber-200  hover:bg-amber-100' },
-  { id: 6, slug: 'thuc-pham-chuc-nang',  name: 'Thực phẩm chức năng',    color: 'bg-teal-50   text-teal-700   border-teal-200   hover:bg-teal-100' },
-  { id: 7, slug: 'cham-soc-co-the',      name: 'Chăm sóc cơ thể',        color: 'bg-pink-50   text-pink-700   border-pink-200   hover:bg-pink-100' },
-]
 
 const handleSearch = () => {
   if (searchQuery.value.trim()) {

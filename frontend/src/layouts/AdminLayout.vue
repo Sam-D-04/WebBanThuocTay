@@ -30,7 +30,7 @@
       </nav>
 
       <div class="sidebar-footer">
-        <button class="logout-btn" :title="sidebarCollapsed ? 'Đăng xuất' : ''">
+        <button class="logout-btn" type="button" @click="handleLogout" :title="sidebarCollapsed ? 'Đăng xuất' : ''">
           <span class="nav-icon" v-html="getNavIcon('logout')"></span>
           <span v-if="!sidebarCollapsed" class="nav-label">Đăng xuất</span>
         </button>
@@ -92,10 +92,12 @@
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAlertStore } from '@/stores/alerts'
+import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const router = useRouter()
 const alertStore = useAlertStore()
+const authStore = useAuthStore()
 
 const sidebarCollapsed = ref(false)
 const profileDropdownOpen = ref(false)
@@ -124,6 +126,12 @@ const toggleProfileDropdown = () => {
 const goToSecuritySettings = () => {
   profileDropdownOpen.value = false
   router.push({ path: '/settings', query: { tab: 'security' } })
+}
+
+const handleLogout = () => {
+  authStore.logout()
+  profileDropdownOpen.value = false
+  router.replace('/login')
 }
 
 const isActiveRoute = (path) => {

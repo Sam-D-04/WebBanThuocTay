@@ -15,31 +15,31 @@ const warehouseRoutes = [
     path: '/warehouse/dashboard',
     name: 'WarehouseDashboard',
     component: WarehouseDashboard,
-    meta: { title: 'Kho - Tong quan' }
+    meta: { title: 'Kho - Tong quan', requiresAuth: true, requiresWarehouse: true }
   },
   {
     path: '/warehouse/products',
     name: 'WarehouseProducts',
     component: WarehouseProducts,
-    meta: { title: 'Kho - San pham' }
+    meta: { title: 'Kho - San pham', requiresAuth: true, requiresWarehouse: true }
   },
   {
     path: '/warehouse/batches',
     name: 'WarehouseBatches',
     component: WarehouseBatches,
-    meta: { title: 'Kho - Lo hang' }
+    meta: { title: 'Kho - Lo hang', requiresAuth: true, requiresWarehouse: true }
   },
   {
     path: '/warehouse/inventory',
     name: 'WarehouseInventory',
     component: WarehouseInventory,
-    meta: { title: 'Kho - Ton kho' }
+    meta: { title: 'Kho - Ton kho', requiresAuth: true, requiresWarehouse: true }
   },
   {
     path: '/warehouse/alerts',
     name: 'WarehouseAlerts',
     component: WarehouseAlerts,
-    meta: { title: 'Kho - Canh bao' }
+    meta: { title: 'Kho - Canh bao', requiresAuth: true, requiresWarehouse: true }
   }
 ]
 

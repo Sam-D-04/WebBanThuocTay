@@ -375,14 +375,14 @@ const statusFilterOptions = [
 ]
 
 const columns = [
-  { title: 'Mã đơn', key: 'id', dataIndex: 'id', width: 140 },
-  { title: 'Khách hàng', key: 'customer', dataIndex: 'customer', width: 220 },
-  { title: 'Thanh toán', key: 'paymentMethod', dataIndex: 'paymentMethod', width: 110 },
-  { title: 'Tổng tiền', key: 'total_amount', dataIndex: 'total_amount', width: 110 },
-  { title: 'Phí ship', key: 'shipping_fee', dataIndex: 'shipping_fee', width: 100 },
-  { title: 'Thành tiền', key: 'final_amount', dataIndex: 'final_amount', width: 120 },
-  { title: 'Trạng thái', key: 'status', dataIndex: 'status', width: 110 },
-  { title: 'Thao tác', key: 'actions', dataIndex: 'actions', width: 160 }
+  { title: 'Mã đơn', key: 'id', dataIndex: 'id' },
+  { title: 'Khách hàng', key: 'customer', dataIndex: 'customer' },
+  { title: 'Thanh toán', key: 'paymentMethod', dataIndex: 'paymentMethod' },
+  { title: 'Tổng tiền', key: 'total_amount', dataIndex: 'total_amount' },
+  { title: 'Phí ship', key: 'shipping_fee', dataIndex: 'shipping_fee' },
+  { title: 'Thành tiền', key: 'final_amount', dataIndex: 'final_amount' },
+  { title: 'Trạng thái', key: 'status', dataIndex: 'status' },
+  { title: 'Thao tác', key: 'actions', dataIndex: 'actions' }
 ]
 
 const itemColumns = [
@@ -801,6 +801,7 @@ watch(
 
 <style scoped>
 .orders-page {
+  overflow-x: hidden;
   animation: fadeIn 0.3s ease;
 }
 
@@ -994,6 +995,16 @@ watch(
 .table-card :deep(.ant-table-tbody > tr > td) {
   padding-top: 14px;
   padding-bottom: 14px;
+}
+
+.table-card :deep(.ant-table-wrapper),
+.table-card :deep(.ant-table-content) {
+  overflow-x: hidden !important;
+}
+
+.table-card :deep(.ant-table-container table) {
+  width: 100% !important;
+  table-layout: fixed;
 }
 
 .item-actions {
