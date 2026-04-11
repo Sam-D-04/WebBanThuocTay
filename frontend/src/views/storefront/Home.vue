@@ -28,9 +28,6 @@
                 </svg>
                 Mua sắm ngay
               </button>
-              <button class="border-2 border-white/50 text-white font-medium px-5 py-3 rounded-xl hover:bg-white/10 transition-all duration-200">
-                Tư vấn miễn phí
-              </button>
             </div>
           </div>
           <div class="hidden md:flex items-center justify-center">
@@ -71,11 +68,15 @@
     <div class="bg-white border-b border-gray-100">
       <div class="max-w-7xl mx-auto px-4 py-4">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div v-for="stat in stats" :key="stat.label" class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0" v-html="stat.icon"></div>
+          <div
+            v-for="stat in stats"
+            :key="stat.label"
+            class="min-h-[76px] rounded-2xl border border-gray-100 bg-gray-50/70 px-3 py-3 flex flex-col items-center justify-center text-center"
+          >
+            <div class="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-1.5" v-html="stat.icon"></div>
             <div>
-              <div class="text-sm font-bold text-gray-800">{{ stat.value }}</div>
-              <div class="text-xs text-gray-400">{{ stat.label }}</div>
+              <div class="text-sm font-bold text-gray-800 leading-none">{{ stat.value }}</div>
+              <div class="text-xs text-gray-500 mt-1">{{ stat.label }}</div>
             </div>
           </div>
         </div>
@@ -99,11 +100,11 @@
         </select>
       </div>
 
-      <div class="hidden sm:flex flex-wrap gap-2">
+      <div class="hidden sm:flex sm:flex-nowrap gap-3">
         <button
           @click="selectedCategory = ''"
           :class="[
-            'px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-200',
+            'flex-1 min-w-0 min-h-12 px-4 py-2 rounded-2xl text-sm font-semibold border-2 transition-all duration-200 text-center flex items-center justify-center',
             !selectedCategory
               ? 'bg-blue-50 text-primary border-blue-200 shadow-sm shadow-blue-100'
               : 'bg-white text-gray-700 border-gray-200 hover:border-primary/40 hover:text-primary'
@@ -116,7 +117,7 @@
           :key="cat.slug"
           @click="filterByCategory(cat.slug)"
           :class="[
-            'px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-200',
+            'flex-1 min-w-0 min-h-12 px-4 py-2 rounded-2xl text-sm font-semibold border-2 transition-all duration-200 text-center flex items-center justify-center',
             selectedCategory === cat.slug
               ? cat.activeColor
               : cat.color

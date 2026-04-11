@@ -1,21 +1,21 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
+  <div class="min-h-screen bg-gray-50 flex flex-col overflow-x-hidden">
     <!-- Top bar -->
     <div class="bg-primary text-white text-xs py-1.5">
-      <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-        <div class="flex items-center gap-4">
+      <div class="max-w-7xl mx-auto px-3 md:px-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+        <div class="flex items-center gap-2 sm:gap-4 min-w-0">
           <div class="flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.39 3.39 2 2 0 0 1 3.37 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 5.72 5.72l1.06-1.06a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
-            <span>1800 599 971</span>
+            <span class="font-medium whitespace-nowrap">1800 599 971</span>
           </div>
-          <span class="text-blue-200">|</span>
-          <span>Giao hàng toàn quốc · Miễn phí từ 299k</span>
+          <span class="hidden sm:inline text-blue-200">|</span>
+          <span class="hidden sm:inline truncate">Giao hàng toàn quốc · Miễn phí từ 299k</span>
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 ml-auto text-[11px] sm:text-xs">
           <template v-if="authStore.isLoggedIn">
-            <span class="text-blue-200">Xin chào, <strong class="text-white">{{ authStore.userName }}</strong></span>
+            <span class="text-blue-200 whitespace-nowrap">Xin chào, <strong class="text-white max-w-[90px] sm:max-w-[150px] inline-block truncate align-bottom">{{ authStore.userName }}</strong></span>
             <span class="text-blue-200">|</span>
             <button @click="authStore.logout(); router.push('/shop')" class="hover:text-blue-200 transition-colors">Đăng xuất</button>
           </template>
@@ -30,23 +30,23 @@
 
     <!-- Main header -->
     <header class="bg-white shadow-sm sticky top-0 z-40">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+      <div class="max-w-7xl mx-auto px-3 md:px-4 py-3 flex flex-wrap items-center gap-3 md:gap-4">
         <!-- Logo -->
-        <router-link to="/shop" class="flex items-center gap-2.5 flex-shrink-0">
+        <router-link to="/shop" class="order-1 flex items-center gap-2.5 min-w-0">
           <!-- Dermacity Monogram Logo -->
           <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-cyan-500 flex items-center justify-center shadow-md shadow-blue-200 flex-shrink-0">
             <span class="text-white font-black text-base tracking-tighter leading-none">Dc</span>
           </div>
-          <div class="leading-none">
+          <div class="leading-none min-w-0">
             <div class="text-[17px] font-black tracking-tight">
               <span class="text-gray-900">Derma</span><span class="text-primary">city</span>
             </div>
-            <div class="text-[10px] text-gray-400 tracking-widest uppercase font-medium">Da Liễu Chuyên Sâu</div>
+            <div class="hidden sm:block text-[10px] text-gray-400 tracking-widest uppercase font-medium">Da Liễu Chuyên Sâu</div>
           </div>
         </router-link>
 
         <!-- Search Bar -->
-        <div class="flex-1 relative">
+        <div class="order-3 w-full md:order-2 md:flex-1 relative">
           <input
             v-model="searchQuery"
             @keyup.enter="handleSearch"
@@ -65,16 +65,16 @@
         </div>
 
         <!-- Right Actions -->
-        <div class="flex items-center gap-2 flex-shrink-0">
+        <div class="order-2 md:order-3 flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
           <!-- User -->
           <router-link
             :to="authStore.isLoggedIn ? '/account/orders' : '/login'"
-            class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors group"
+            class="flex flex-col items-center gap-0.5 px-2 sm:px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors group"
           >
             <svg class="w-5 h-5 text-gray-500 group-hover:text-primary transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
             </svg>
-            <span class="text-[10px] text-gray-500 group-hover:text-primary transition-colors whitespace-nowrap">
+            <span class="hidden sm:block text-[10px] text-gray-500 group-hover:text-primary transition-colors whitespace-nowrap">
               {{ authStore.isLoggedIn ? 'Tài khoản' : 'Đăng nhập' }}
             </span>
           </router-link>
@@ -82,7 +82,7 @@
           <!-- Cart -->
           <button
             @click="cartStore.toggleDrawer()"
-            class="flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors group relative"
+            class="flex flex-col items-center gap-0.5 px-2 sm:px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors group relative"
           >
             <div class="relative">
               <svg class="w-5 h-5 text-gray-500 group-hover:text-primary transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -94,7 +94,7 @@
                 class="absolute -top-2 -right-2 min-w-[18px] h-[18px] bg-warning text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1"
               >{{ cartStore.totalItems }}</span>
             </div>
-            <span class="text-[10px] text-gray-500 group-hover:text-primary transition-colors">Giỏ hàng</span>
+            <span class="hidden sm:block text-[10px] text-gray-500 group-hover:text-primary transition-colors">Giỏ hàng</span>
           </button>
         </div>
       </div>
@@ -131,8 +131,8 @@
           <div>
             <h4 class="text-white font-semibold mb-4">Liên hệ</h4>
             <ul class="space-y-2 text-sm">
-              <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.39 3.39 2 2 0 0 1 3.37 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 5.72 5.72l1.06-1.06a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>1800 599 971</li>
-              <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>support@dermacity.vn</li>
+              <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.39 3.39 2 2 0 0 1 3.37 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 5.72 5.72l1.06-1.06a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>1900 3009</li>
+              <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>supportDermacity@dermacity.vn</li>
             </ul>
           </div>
           <div>

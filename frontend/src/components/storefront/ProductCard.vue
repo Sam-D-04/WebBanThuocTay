@@ -45,12 +45,12 @@
       <h3 class="text-sm font-semibold text-gray-800 line-clamp-2 leading-snug mb-1 min-h-[2.5rem]">{{ product.name }}</h3>
       <p class="text-xs text-gray-400 mb-2">{{ product.dosage_form }} · {{ product.volume }}</p>
 
-      <div class="flex items-center justify-between">
-        <span class="text-base font-bold text-primary">{{ formatPrice(product.price_listed) }}</span>
+      <div class="flex flex-col items-stretch gap-2 min-[420px]:flex-row min-[420px]:items-end min-[420px]:justify-between">
+        <span class="text-base font-bold text-primary shrink-0 text-center min-[420px]:text-left">{{ formatPrice(product.price_listed) }}</span>
         <button
           v-if="product.stock_quantity > 0"
           @click.stop="$emit('add-to-cart', product)"
-          class="flex items-center gap-1 text-xs text-primary border border-primary/30 hover:bg-primary hover:text-white hover:border-primary rounded-lg px-2 py-1 transition-all duration-200 font-medium"
+          class="inline-flex items-center justify-center gap-1 h-8 w-full min-[420px]:w-auto px-3 rounded-xl bg-primary text-white border border-primary shadow-sm hover:bg-blue-700 transition-all duration-200 text-xs font-semibold whitespace-nowrap"
         >
           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>

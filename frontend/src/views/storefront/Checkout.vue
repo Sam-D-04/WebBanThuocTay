@@ -83,7 +83,16 @@
               <div :class="['w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0', form.payment_method === pm.value ? 'border-primary' : 'border-gray-300']">
                 <div v-if="form.payment_method === pm.value" class="w-2.5 h-2.5 bg-primary rounded-full"></div>
               </div>
-              <span class="text-2xl">{{ pm.icon }}</span>
+              <span
+                v-if="pm.iconType === 'emoji'"
+                class="text-2xl"
+              >{{ pm.icon }}</span>
+              <div
+                v-else-if="pm.iconType === 'momo-logo'"
+                class="bg-[#A50064] text-white text-xs font-bold leading-none px-2.5 py-1.5 rounded-lg tracking-wide"
+              >
+                MoMo
+              </div>
               <div>
                 <div class="text-sm font-semibold text-gray-800">{{ pm.label }}</div>
                 <div class="text-xs text-gray-400">{{ pm.desc }}</div>
@@ -146,6 +155,16 @@
             <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
             {{ isSubmitting ? 'Đang đặt hàng...' : orderSuccess ? 'Đã đặt hàng!' : 'Xác nhận đặt hàng' }}
           </button>
+
+          <router-link
+            to="/shop"
+            class="w-full mt-2 border border-gray-200 hover:border-primary/40 text-gray-700 hover:text-primary font-semibold py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Tiếp tục mua hàng
+          </router-link>
         </div>
       </div>
     </div>
@@ -179,9 +198,9 @@ const form = ref({
 })
 
 const paymentMethods = [
-  { value: 'bank_transfer', label: 'Chuyển khoản ngân hàng', icon: '🏦', desc: 'Chuyển khoản trực tiếp qua ngân hàng' },
-  { value: 'vnpay', label: 'VNPay', icon: '💳', desc: 'Thanh toán qua cổng VNPay' },
-  { value: 'momo', label: 'MoMo', icon: '💜', desc: 'Ví điện tử MoMo' },
+  { value: 'bank_transfer', label: 'Chuyển khoản ngân hàng', icon: '🏦', iconType: 'emoji', desc: 'Chuyển khoản trực tiếp qua ngân hàng' },
+  { value: 'vnpay', label: 'VNPay', icon: '💳', iconType: 'emoji', desc: 'Thanh toán qua cổng VNPay' },
+  { value: 'momo', label: 'MoMo', iconType: 'momo-logo', desc: 'Ví điện tử MoMo' },
 ]
 
 const shippingFee = computed(() => cartStore.totalAmount >= 299000 ? 0 : 25000)
